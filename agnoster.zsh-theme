@@ -30,6 +30,7 @@ typeset -aHg AGNOSTER_PROMPT_SEGMENTS=(
     prompt_virtualenv
     prompt_dir
     prompt_git
+    prompt_docker_host
     prompt_newline
     prompt_end
 )
@@ -65,6 +66,15 @@ prompt_segment() {
   fi
   CURRENT_BG=$1
   [[ -n $3 ]] && print -n $3
+}
+
+#docker host
+prompt_docker_host() {
+  if [[ ! -z "$DOCKER_MACHINE_NAME" ]]; then
+    prompt_segment red default "\xF0\x9F\x90\xB3: '$DOCKER_MACHINE_NAME'"
+  elif [[ ! -z "$DOCKER_HOST" ]]; then
+    prompt_segment red default "\xF0\x9F\x90\xB3: '$DOCKER_HOST'"
+  fi
 }
 
 # End the prompt, closing any open segments
